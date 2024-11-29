@@ -1,18 +1,19 @@
-import { FormEvent, useEffect } from "react";
+import { FormEvent, useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import Input from "../components/form/Input";
 import credentials from "../../credentials.json";
-import { generateToken, getToken } from "../utils";
+import { generateToken } from "../utils";
+import { ACTIONS, Context } from "../store";
+import Container from "../components/Container";
 
 type Props = {};
 
 const Login = ({}: Props) => {
   const navigate = useNavigate();
+  const [state, dispatch] = useContext(Context);
 
   useEffect(() => {
-    const token = getToken();
-    
-    if (token) {
+    if (state.token) {
       navigate("/");
       return;
     }
@@ -29,7 +30,10 @@ const Login = ({}: Props) => {
         console.log(user);
         if (user && user.password === data.password) {
           const token = generateToken();
-          localStorage.setItem("token", token);
+          dispatch({
+            type: ACTIONS.SET_TOKEN,
+            token: token,
+          });
           navigate("/");
         } else {
           window.alert("Invalid email or password!");
@@ -41,16 +45,18 @@ const Login = ({}: Props) => {
   };
 
   return (
-    <form method="post" onSubmit={onSubmit}>
-      <div>Login</div>
-      <Input name={"email"} type={"email"} placeholder={"Enter your email"} />
-      <Input
-        name={"password"}
-        type={"password"}
-        placeholder={"Enter your password"}
-      />
-      <button type="submit">Submit</button>
-    </form>
+    <Container>
+      <form method="post" onSubmit={onSubmit}>
+        <div>Login</div>
+        <Input name={"email"} type={"text"} placeholder={"Enter your email"} />
+        <Input
+          name={"password"}
+          type={"password"}
+          placeholder={"Enter your password"}
+        />
+        <button type="submit">Submit</button>
+      </form>
+    </Container>
   );
 };
 

@@ -1,26 +1,31 @@
 import { Outlet, useNavigate } from "react-router";
 import Navbar from "./Navbar";
-import { getToken } from "../utils";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { Context } from "../store";
+import Container from "../components/Container";
 
-type Props = {};
+type Props1 = {};
 
-const Layout = ({}: Props) => {
+const Layout = ({}: Props1) => {
   const navigate = useNavigate();
+  const [state] = useContext(Context);
 
   useEffect(() => {
-    const token = getToken();
-
-    if (!token) {
+    if (state.token === null) {
       navigate("/login");
-      return;
     }
-  }, []);
+  }, [state.token]);
+
+  if (state.token === undefined) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
       <Navbar />
-      <Outlet />
+      <Container>
+        <Outlet />
+      </Container>
     </div>
   );
 };

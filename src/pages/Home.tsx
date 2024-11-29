@@ -1,9 +1,12 @@
-type Props = {}
+import { useContext } from "react";
+import { Context } from "../store";
 
-const Home = ({ }: Props) => {
-    return (
-        <div>Home</div>
-    )
-}
+type Props = {};
 
-export default Home
+const Home = ({}: Props) => {
+  const [state] = useContext(Context);
+
+  return <div className="p-2 text-center">Welcome, <span className="text-primary">{state.token}</span></div>;
+};
+
+export default Home;
