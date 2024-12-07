@@ -5,14 +5,14 @@ type ContextProviderProps = {
 };
 
 export const ACTIONS = {
-  SET_TOKEN: "SET_TOKEN",
+  // SET_TOKEN: "SET_TOKEN",
 };
 
 type DefaultValues = {
-  token: string | null | undefined;
+  // token: string | null | undefined;
 };
 const defaultValues: DefaultValues = {
-  token: undefined,
+  // token: undefined,
 };
 
 export const Context = createContext<[DefaultValues, React.Dispatch<any>]>([
@@ -23,18 +23,21 @@ export const Context = createContext<[DefaultValues, React.Dispatch<any>]>([
 // action -> (type, payload)
 const reducer = (
   state: DefaultValues,
-  action: { type: keyof typeof ACTIONS; token: null | string }
-) => {
-  if (action.type === ACTIONS.SET_TOKEN) {
-    const updatedState = { ...state };
-    updatedState.token = action.token;
-    if (action.token) {
-      localStorage.setItem("token", action.token);
-    } else {
-      localStorage.removeItem("token");
-    }
-    return updatedState;
+  action: {
+    type: keyof typeof ACTIONS;
+    //  token: null | string
   }
+) => {
+  // if (action.type === ACTIONS.SET_TOKEN) {
+  //   const updatedState = { ...state };
+  //   updatedState.token = action.token;
+  //   if (action.token) {
+  //     localStorage.setItem("token", action.token);
+  //   } else {
+  //     localStorage.removeItem("token");
+  //   }
+  //   return updatedState;
+  // }
   return state;
 };
 

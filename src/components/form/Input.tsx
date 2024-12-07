@@ -1,15 +1,22 @@
 type Props = {
   type: string;
   name: string;
-  placeholder: string;
+  placeholder?: string;
+  value?: string;
 };
 
-const Input = ({ type, name, placeholder }: Props) => {
+const Input = ({ type, name, placeholder, value }: Props) => {
   return (
     <div>
       <label htmlFor={name}>{name}:</label>
       <br />
-      <input type={type} name={name} id={name} placeholder={placeholder} />
+      <input
+        type={type}
+        name={name}
+        id={name}
+        placeholder={placeholder}
+        value={value}
+      />
     </div>
   );
 };
