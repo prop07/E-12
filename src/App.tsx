@@ -1,36 +1,20 @@
-import Layout from "./layouts/Layout";
-import Account from "./pages/Account";
-import Home from "./pages/Home";
-import { createBrowserRouter, RouterProvider } from "react-router";
-import Login from "./pages/Login";
+import { RouterProvider } from "react-router";
 import { useContext, useEffect } from "react";
 import { ACTIONS, Context } from "./store";
-import NotFound from "./pages/NotFound";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    errorElement: <NotFound />,
-    children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "/account",
-        element: <Account />,
-      },
-    ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-]);
+import { router } from "./router";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 function App() {
+  const auth = getAuth();
   const [, dispatch] = useContext(Context);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const uid = user.uid;
+    } else {
+      console.log("User Logout");
+    }
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
